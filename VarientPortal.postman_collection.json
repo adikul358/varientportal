@@ -1,0 +1,143 @@
+{
+	"info": {
+		"_postman_id": "6235485e-c652-4a56-8897-241c4d16de62",
+		"name": "VarientPortal",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "29563521",
+		"_collection_link": "https://www.postman.com/joint-operations-participant-4553397/workspace/postman-api-fundamentals-student-expert/collection/29563521-6235485e-c652-4a56-8897-241c4d16de62?action=share&source=collection_link&creator=29563521"
+	},
+	"item": [
+		{
+			"name": "get items",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// var fid = pm.response.json()[0]._id;",
+							"pm.collectionVariables.set(\"sample_id\", pm.response.json()[0]._id);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{HOST}}/api/items"
+			},
+			"response": []
+		},
+		{
+			"name": "get item by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{HOST}}/api/item?id={{sample_id}}",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"item"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{sample_id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add items",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n    {\n        \"productName\": \"Hoodie\",\n        \"variants\": [\n            {\n                \"size\": \"M\",\n                \"colour\": \"Red\",\n                \"material\": \"Cotton\"\n            },\n            {\n                \"size\": \"M\",\n                \"colour\": \"Green\",\n                \"material\": \"Cotton\"\n            }\n        ]\n    },\n    {\n        \"productName\": \"Beanie\",\n        \"variants\": [\n            {\n                \"colour\": \"Red\",\n                \"material\": \"Cotton\"\n            },\n            {\n                \"colour\": \"Green\",\n                \"material\": \"Cotton\"\n            }\n        ]\n    }\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{HOST}}/api/items"
+			},
+			"response": []
+		},
+		{
+			"name": "add item",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"productName\": \"Hoodie\",\n    \"variants\": [\n        {\n            \"size\": \"M\",\n            \"colour\": \"Red\",\n            \"material\": \"Cotton\"\n        },\n        {\n            \"size\": \"M\",\n            \"colour\": \"Green\",\n            \"material\": \"Cotton\"\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{HOST}}/api/items"
+			},
+			"response": []
+		},
+		{
+			"name": "update item",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"_id\": \"660436fd93b616f57e94bae2\",\n    \"productName\": \"TShirt\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{HOST}}/api/item"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "HOST",
+			"value": "127.0.0.1:5000"
+		},
+		{
+			"key": "sample_id",
+			"value": ""
+		}
+	]
+}

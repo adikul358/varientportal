@@ -1,43 +1,13 @@
-ARG PYTHON_VERSION=3.11
+FROM python:3.9
 
-FROM python:${PYTHON_VERSION}
+WORKDIR /app
 
+COPY requirements.txt /app
 
-## Set Timezone
+RUN pip3 install --no-cache-dir --upgrade -r requirements.txt
 
-ARG TIMEZONE='IST'
-ENV TIMEZONE=${TIMEZONE}
+COPY . .
 
-RUN ln -snf /usr/share/zoneinfo/$TIMEZONE /etc/localtime && \
-    echo $TIMEZONE > /etc/timezone
+EXPOSE 5000
 
-COPY configs/requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
-
-# By default, run 2 processes
-ENV UWSGI_CHEAPER 2
-# By default, when on demand, run up to 16 processes
-ENV UWSGI_PROCESSES 16
-
-## Configure www-data user
-
-ARG PUID='1000'
-ARG PGID='1000'
-
-RUN usermod -u ${PUID} www-data && \
-    groupmod -g ${PGID} www-data && \
-    mkdir -p /var/www/api && \
-    chown -R www-data:www-data /var/www
-
-COPY run.sh /usr/local/bin/run.sh
-RUN chmod +x /usr/local/bin/run.sh
-
-################################################################################
-
-USER www-data
-
-WORKDIR /var/www/api
-
-EXPOSE 3031
-
-CMD ["run.sh"]
+CMD ["flask", "run", "--host", "0.0.0.0"]

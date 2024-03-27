@@ -32,7 +32,7 @@ item = {
 }
 
 === API Endpoints ============
-GET /items ✅
+GET /items
 GET /item?id
 POST /item
 POST /items
@@ -70,6 +70,7 @@ init_data = [
 @app.route('/api/items/', methods=['GET'])
 def getItems():
 		if request.method == 'GET':
+			# col.insert_many(init_data)
 			data = list(col.find())
 			for docs in data:
 				docs["_id"] = str(docs["_id"])
@@ -91,19 +92,22 @@ def getItem():
 @app.route('/api/items/', methods=['POST'])
 def addItems():
 		if request.method == 'POST':
-			return "testing"
+			data = request.get_json()
+			res = col.insert_many(data);
+			inserted_ids = [str(_id) for _id in res.inserted_ids]
+			return jsonify({"inserted_ids": inserted_ids})
 
 @app.route('/api/item/', methods=['POST'])
 def addItem():
 		if request.method == 'POST':
-			return "testing"
-
-@app.route('/api/items/', methods=['PATCH'])
-def updateItems():
-		if request.method == 'PATCH':
-			return "testing"
+			data = request.get_json()
+			res = col.insert_one(data);
+			return jsonify({"inserted_id": str(res.inserted_id)})
 
 @app.route('/api/item/', methods=['PATCH'])
 def updateItem():
 		if request.method == 'PATCH':
-			return "testing"
+			data = request.get_json()
+			_id = ObjectId(request.args.get("id"))
+			res = col.update_one({"_id": _id}, {"$set": data});
+			return jsonify({"matched_count": str(res.matched_count), "modified_count": str(res.modified_count)})
