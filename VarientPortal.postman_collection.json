@@ -133,7 +133,7 @@
 	"variable": [
 		{
 			"key": "HOST",
-			"value": "127.0.0.1:5000"
+			"value": "https://varientportal.projects.adikul.dev"
 		},
 		{
 			"key": "sample_id",
