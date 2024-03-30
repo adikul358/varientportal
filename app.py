@@ -10,13 +10,8 @@ col = db["items"]
 '''
 === Data Scheme ============
 item = {
-	_id,
+	_id: ObjectId(),
 	productName: "tshirt",
-	attributes: {
-		size: ["M", "L", "XL"],
-		colour: ["Ferrari Red", "Navy Blue"],
-		material: ["Cotton", "Polyester"],
-	}
 	variants: [
 		{
 			size: "M",
